@@ -1,0 +1,1 @@
+package com.example.dailytask.repository; import com.example.dailytask.entity.DailyTask; import org.springframework.data.jpa.repository.*; public interface DailyTaskRepository extends JpaRepository<DailyTask,Long>,JpaSpecificationExecutor<DailyTask>{}

@@ -1,0 +1,7 @@
+package com.example.dailytask.service;
+import com.example.dailytask.dto.ApiDtos.*;import com.example.dailytask.entity.*;import com.example.dailytask.repository.*;import org.springframework.stereotype.Service;import org.springframework.transaction.annotation.Transactional;import java.time.LocalDateTime;import java.util.*;
+@Service public class TaskNoteService {private final DailyTaskRepository tasks;private final TaskNoteRepository notes;public TaskNoteService(DailyTaskRepository t,TaskNoteRepository n){tasks=t;notes=n;}private NoteResponse dto(TaskNote n){return new NoteResponse(n.getId(),n.getNoteDescription(),n.getNoteDate());}
+ @Transactional(readOnly=true) public List<NoteResponse> list(Long id){if(!tasks.existsById(id))throw new IllegalArgumentException("Task not found");return notes.findByTaskIdOrderByNoteDateDesc(id).stream().map(this::dto).toList();}
+ @Transactional public NoteResponse add(Long id,NoteRequest r){DailyTask t=tasks.findById(id).orElseThrow(()->new IllegalArgumentException("Task not found"));TaskNote n=new TaskNote();n.setTask(t);n.setNoteDate(LocalDateTime.now());n.setNoteDescription(r.noteDescription());return dto(notes.save(n));}
+ @Transactional public void delete(Long taskId,Long noteId){TaskNote n=notes.findById(noteId).orElseThrow(()->new IllegalArgumentException("Note not found"));if(!n.getTask().getId().equals(taskId))throw new IllegalArgumentException("Note does not belong to task");notes.delete(n);}
+}
