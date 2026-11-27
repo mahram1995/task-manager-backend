@@ -1,16 +1,14 @@
-
-server:
-  port: 8050
-
 spring:
   application:
-    name: daily-task-management
+    name: task-manager-service
+  profiles:
+    default: dev
 
-  datasource:
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    driver-class-name: oracle.jdbc.OracleDriver
-    username: hims
-    password: root
+  #  datasource:
+  #    url: jdbc:oracle:thin:@localhost:1521:xe
+  #    driver-class-name: oracle.jdbc.OracleDriver
+  #    username: hims
+  #    password: root
 
   jpa:
     hibernate:

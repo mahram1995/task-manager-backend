@@ -55,23 +55,26 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource(  CorsProperties corsProperties) {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of(
-                "http://localhost:4300",
-                "http://127.0.0.1:4300"
-        ));
+//        configuration.setAllowedOrigins(List.of(
+//                "http://localhost:4300",
+//                "http://localhost:9090"// for tomcat server
+//        ));
 
-        configuration.setAllowedMethods(List.of(
-                "GET", "POST", "PUT", "DELETE",
-                "PATCH", "OPTIONS"
-        ));
+//        configuration.setAllowedMethods(List.of(
+//                "GET", "POST", "PUT", "DELETE",
+//                "PATCH", "OPTIONS"
+//        ));
 
-        configuration.setAllowedHeaders(List.of("*"));
-
-        configuration.setAllowCredentials(true);
+      //  configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowedOrigins(corsProperties.getAllowedOrigins());
+        configuration.setAllowedMethods(corsProperties.getAllowedMethods());
+        configuration.setAllowedHeaders(corsProperties.getAllowedHeaders());
+        configuration.setAllowCredentials(corsProperties.isAllowCredentials());
+     //   configuration.setAllowCredentials(true);
 
         configuration.setMaxAge(3600L);
 
@@ -92,7 +95,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .cors(cors -> cors.configurationSource(
-                        corsConfigurationSource()
+                        corsConfigurationSource(  new   CorsProperties())
                 ))
 
                 .sessionManagement(session ->

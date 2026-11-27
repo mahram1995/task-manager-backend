@@ -2,6 +2,7 @@
 package com.example.dailytask.controller;
 
 import com.example.dailytask.dto.ApiDtos.*;
+import com.example.dailytask.dto.TaskDomain;
 import com.example.dailytask.service.DailyTaskService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
@@ -13,18 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/tasks")
 public class DailyTaskController {
 
-    private final DailyTaskService s;
+    private final DailyTaskService service;
 
     public DailyTaskController(DailyTaskService s) {
-        this.s = s;
+        this.service = s;
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Task Controller Working");
-    }
 
-    @GetMapping
+    @GetMapping("get-all")
     public Page<TaskResponse> all(
             @RequestParam(name = "q", required = false) String q,
             @RequestParam(name = "client", required = false) String client,
@@ -49,7 +46,7 @@ public class DailyTaskController {
 
         Pageable pageable = PageRequest.of(page, size, sorting);
 
-        return s.search(
+        return service.search(
                 q,
                 client,
                 priority,
@@ -59,34 +56,33 @@ public class DailyTaskController {
         );
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("get/{taskIdd}")
     public TaskResponse get(
-            @PathVariable(name = "id") Long id) {
+            @PathVariable(name = "taskIdd") Long taskIdd) {
 
-        return s.get(id);
+        return service.get(taskIdd);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public TaskResponse create(
-            @Valid @RequestBody TaskRequest request,
+            @Valid @RequestBody TaskDomain request,
             Authentication authentication) {
 
-        return s.save(request, authentication.getName(), null);
+        return service.save(request, authentication.getName(), null);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("update")
     public TaskResponse update(
-            @PathVariable(name = "id") Long id,
-            @Valid @RequestBody TaskRequest request,
+            @Valid @RequestBody TaskDomain request,
             Authentication authentication) {
 
-        return s.save(request, authentication.getName(), id);
+        return service.save(request, authentication.getName(), request.getId());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{taskId}")
     public void delete(
-            @PathVariable(name = "id") Long id) {
+            @PathVariable(name = "taskId") Long taskId) {
 
-        s.delete(id);
+        service.delete(taskId);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.dailytask.service;
 
 import com.example.dailytask.dto.ApiDtos.*;
+import com.example.dailytask.dto.TaskDomain;
 import com.example.dailytask.entity.*;
 import com.example.dailytask.repository.*;
 import org.springframework.stereotype.Service;
@@ -43,20 +44,20 @@ public class DailyTaskService {
     }
 
     @Transactional
-    public TaskResponse save(TaskRequest r, String user, Long id) {
+    public TaskResponse save(TaskDomain r, String user, Long id) {
         DailyTask t = id == null ? new DailyTask() : repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Task not found: " + id));
-        t.setTaskName(r.taskName());
-        t.setDescription(r.description());
-        t.setClient(r.client());
-        t.setDevStatus(r.devStatus() == null ? TaskEnums.DevelopmentStatus.PENDING : r.devStatus());
-        t.setExpectedDeliveryDate(r.expectedDeliveryDate());
-        t.setDeliveryDate(r.deliveryDate());
-        t.setExpectedStartDate(r.expectedStartDate());
-        t.setActualStartDate(r.actualStartDate());
-        t.setExpectedEndDate(r.expectedEndDate());
-        t.setActualEndDate(r.actualEndDate());
-        t.setPriority(r.priority() == null ? TaskEnums.Priority.NORMAL : r.priority());
-        t.setDeliveryStatus(r.deliveryStatus() == null ? TaskEnums.DeliveryStatus.PENDING : r.deliveryStatus());
+        t.setTaskName(r.getTaskName());
+        t.setDescription(r.getDescription());
+        t.setClient(r.getClient());
+        t.setDevStatus(r.getDevStatus() == null ? TaskEnums.DevelopmentStatus.PENDING : r.getDevStatus());
+        t.setExpectedDeliveryDate(r.getExpectedDeliveryDate());
+        t.setDeliveryDate(r.getDeliveryDate());
+        t.setExpectedStartDate(r.getExpectedStartDate());
+        t.setActualStartDate(r.getActualStartDate());
+        t.setExpectedEndDate(r.getExpectedEndDate());
+        t.setActualEndDate(r.getActualEndDate());
+        t.setPriority(r.getPriority() == null ? TaskEnums.Priority.NORMAL : r.getPriority());
+        t.setDeliveryStatus(r.getDevStatus() == null ? TaskEnums.DeliveryStatus.PENDING : r.getDeliveryStatus());
         if (id == null) {
             t.setCreateDate(LocalDate.now());
             t.setCreateBy(user);
