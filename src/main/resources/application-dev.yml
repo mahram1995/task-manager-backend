@@ -31,6 +31,21 @@ app:
       - "*"
     allow-credentials: true
     max-age: 3600
+
   jwt:
     secret: ${JWT_SECRET:VGhpc0lzQURldmVsb3BtZW50T25seVNlY3JldEtleUZvckRhaWx5VGFza0FwcA==}
     expiration-ms: 28800000
+
+springdoc:
+  packages-to-scan: com.mislbd.sprint
+  paths-to-match: /**
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    org.springframework.security: DEBUG

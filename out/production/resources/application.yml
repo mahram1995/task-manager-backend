@@ -1,6 +1,6 @@
 spring:
   application:
-    name: daily-task-management
+    name: task-manager-service
   profiles:
     default: dev
 

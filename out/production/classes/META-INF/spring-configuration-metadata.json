@@ -1,0 +1,40 @@
+{
+  "groups": [
+    {
+      "name": "app.cors",
+      "type": "com.mislbd.sprint.config.CorsProperties",
+      "sourceType": "com.mislbd.sprint.config.CorsProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.cors.allow-credentials",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.mislbd.sprint.config.CorsProperties"
+    },
+    {
+      "name": "app.cors.allowed-headers",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.mislbd.sprint.config.CorsProperties"
+    },
+    {
+      "name": "app.cors.allowed-methods",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.mislbd.sprint.config.CorsProperties"
+    },
+    {
+      "name": "app.cors.allowed-origins",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.mislbd.sprint.config.CorsProperties"
+    },
+    {
+      "name": "app.cors.max-age",
+      "type": "java.lang.Long",
+      "sourceType": "com.mislbd.sprint.config.CorsProperties"
+    }
+  ],
+  "hints": [],
+  "ignored": {
+    "properties": []
+  }
+}

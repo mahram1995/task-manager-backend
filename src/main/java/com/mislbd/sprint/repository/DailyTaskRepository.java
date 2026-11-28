@@ -1,0 +1,1 @@
+package com.mislbd.sprint.repository; import com.mislbd.sprint.entity.TaskEntity; import org.springframework.data.jpa.repository.*; public interface DailyTaskRepository extends JpaRepository<TaskEntity,Long>,JpaSpecificationExecutor<TaskEntity>{}
